@@ -1,0 +1,53 @@
+# NetSec Toolkit Pro - Configuration
+scanner:
+  interface: "wlan0"
+  timeout: 5
+  use_simulated: true
+
+port_scanner:
+  timeout: 3
+  max_threads: 100
+  default_ports: [21, 22, 23, 25, 53, 80, 110, 143, 443, 993, 995, 3306, 5432, 6379, 8080]
+  banner_grab: true
+
+sniffer:
+  max_packets: 100
+  promiscuous: false
+
+password_auditor:
+  min_length: 8
+  max_length: 16
+  common_words:
+    - password
+    - admin
+    - welcome
+    - company
+    - root
+    - user
+    - test
+  common_passwords_file: "~/.netsec/passwords.txt"
+  hash_algorithms: [md5, sha1, sha256]
+
+vuln_detector:
+  cve_api: "https://cve.circl.lu/api"
+  timeout: 10
+  known_vulns_db:
+    - service: "vsftpd"
+      version_pattern: "2.3.4"
+      cve: "CVE-2011-2523"
+      description: "vsftpd 2.3.4 backdoor command execution"
+      severity: "CRITICAL"
+    - service: "vsftpd"
+      version_pattern: "3.0.3"
+      cve: "CVE-2017-9086"
+      description: "vsftpd 3.0.3 denial of service"
+      severity: "MEDIUM"
+
+report:
+  output_dir: "reports"
+  format: "html"
+  include_raw_data: true
+
+thresholds:
+  signal_strength: -70
+  risk_score: 50
